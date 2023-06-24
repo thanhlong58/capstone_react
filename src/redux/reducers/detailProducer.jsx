@@ -24,13 +24,18 @@ export default detailProducer.reducer
 export  const getProductDetailActionApi = (id) => {
 
     return async (dispatch) => {
+      try {
         let res =   await axios ({
-            url : `https://shop.cyberlearn.vn/api/Product/getbyid?id=${id}`,
-            method : 'GET'
-        })
-    
-        const action2 = getProductDetailAction(res.data.content)
-        dispatch(action2)
+          url : `https://shop.cyberlearn.vn/api/Product/getbyid?id=${id}`,
+          method : 'GET'
+      })
+  
+      const action2 = getProductDetailAction(res.data.content)
+      dispatch(action2)
+      }catch(err) {
+        console.log(err)
+      }
+      
       }
 }
 

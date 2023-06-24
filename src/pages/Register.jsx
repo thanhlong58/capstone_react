@@ -94,7 +94,7 @@ const Register = () => {
              <div className='form-group'></div>
              <p>Gender</p>
              <input type="radio" name='gender' id='male'    checked={frm.values.gender === true}
-                    onChange={() => frm.setFieldValue('gender', true)} />Male   <span> <input type="radio" name='gender' id=''   checked={frm.values.gender === false}
+                    onChange={() => frm.setFieldValue('gender', true)} />Male   <span> <input type="radio" name='gender' id='female'   checked={frm.values.gender === false}
                     onChange={() => frm.setFieldValue('gender', false)} />Female</span>
              
             

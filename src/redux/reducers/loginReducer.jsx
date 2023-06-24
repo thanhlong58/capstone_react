@@ -1,9 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit'
 import axios from 'axios';
-import { USER_LOGIN, getStoreJson, setStoreJson } from '../../utility/config';
+import { USER_LOGIN, getStoreJson, http, setStoreJson } from '../../utility/config';
+import { customNavigate } from '../..';
 
 const initialState = {
-    userLogin : getStoreJson(USER_LOGIN)
+    userLogin : getStoreJson(USER_LOGIN),
+    userProfile :  {
+
+    },
+    userUpdate : {}
 
 }
 
@@ -13,11 +18,18 @@ const loginReducer = createSlice({
   reducers: {
     loginAction: (state,action) => {
            state.userLogin = action.payload
+    },
+    setProfileAction :(state,action) => {
+      state.userProfile = action.payload
+    },
+    UpdateUserAction : (state,action) => {
+      state.userUpdate = action.payload
     }
   }
+  
 });
 
-export const {loginAction} = loginReducer.actions
+export const {loginAction,setProfileAction,UpdateUserAction } = loginReducer.actions
 
 export default loginReducer.reducer
 
@@ -44,3 +56,56 @@ export const loginActionApi = (user) => {
         }
     }
 } 
+
+
+// export const getProfileApi = () => {
+//   return async (dispatch) => {
+//     try {
+//       const res = await axios  ({
+//         url : 'https://shop.cyberlearn.vn/api/Users/getProfile',
+//         method : 'POST',
+//         headers  : {
+//           Authorization  : `Bearer ${getStoreJson(USER_LOGIN).accessToken}`
+//         }
+//       })
+//       const action  =  setProfileAction(res.data.content);
+//       dispatch(action)
+//     }
+//     catch (err) {
+//       console.log(err)
+
+//       if(err.response?.status === 401) {
+//         customNavigate.push('/login')
+//       }
+
+//     }
+  
+//   }
+// }
+
+export const getProfileApi = () => {
+
+
+  return async dispatch => {
+
+      const res = await http.post('/api/Users/getProfile');
+      if (res) {
+          //đưa lên store redux
+          const action = setProfileAction(res.data.content);
+          dispatch(action);
+      }
+
+
+  }
+}
+
+
+export const updateUserApi =  (user) => {
+  return async (dispatch)  => {
+       const res = await http.post('/api/Users/updateProfile',user);
+       if(res) {
+        const action = UpdateUserAction(res.data.content)
+        dispatch(action)
+       }
+  }
+}

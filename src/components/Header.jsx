@@ -10,7 +10,7 @@ const Header = () => {
     if (userLogin.accessToken) {
       return <>
        <li className='nav-item'>
-        <NavLink className={'nav-link'} to={'/profile'}>
+        <NavLink className="nav-link" to="/profile">
             Hello {userLogin.email}
         </NavLink>
        </li>
@@ -37,8 +37,9 @@ const Header = () => {
         <NavLink className="nav-link" to="/register">Register</NavLink>
       </li>
       <li className="nav-item">
-        <NavLink className="nav-link" to="/profile">Profile</NavLink>
+        <NavLink className="nav-link" to="/test-card">Test card</NavLink>
       </li>
+     
       <li className="nav-item dropdown">
         <a className="nav-link dropdown-toggle" href="#" id="dropdownId" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
         <div className="dropdown-menu" aria-labelledby="dropdownId">

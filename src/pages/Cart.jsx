@@ -1,9 +1,18 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { USER_LOGIN, getStoreJson } from '../utility/config'
+import { customNavigate } from '..'
+import { changeQuantity, deleteAction, orderApi } from '../redux/reducers/cartReducer'
 
 const Cart = () => {
+  const dispatch = useDispatch()
     const {arrCart} = useSelector (state=> state.cartReducer)
     console.log(arrCart)
+    if (!getStoreJson(USER_LOGIN).accessToken) {
+     
+     customNavigate.push('/login')
+    }
+  
   return (
    <div className='container'>
     Cart
@@ -29,17 +38,55 @@ const Cart = () => {
             <td>
                 <img src={item.image}width={50} alt="..." />
             </td>
-            <td>Produc1</td>
-            <td>1000</td>
-            <td>2</td>
-            <td>2000</td>
+            <td>{item.name}</td>
+            <td>{item.price}</td>
             <td>
-                <button className='btn btn-danger'>Delete</button>
+              <button onClick={()=>{
+                const payload = {
+                  id : item.id,
+                  quantity: -1 
+                }
+                 const action = changeQuantity(payload)
+                 dispatch(action)
+              }} className=' btn btn-primary mx-2'>-</button>
+              {item.quantity}
+              <button onClick={()=> {
+                  const payload = {
+                    id : item.id,
+                    quantity: 1 
+                  }
+                   const action = changeQuantity(payload)
+                   dispatch(action)
+              }} className=' btn btn-primary mx-2'>+</button>
+              </td>
+            <td>{item.quantity * item.price}</td>
+            <td>
+                <button onClick={()=> {
+                
+               const action =    deleteAction(item.id)
+               dispatch(action)
+                }} className='btn btn-danger'>Delete</button>
             </td>
+            <button className='btn btn-success' onClick={()=> {
+          const payload = {
+            
+            orderDetail: [
+              {
+                productId: item.id,
+                quantity: item.quantity
+              }
+            ],
+            email: getStoreJson(USER_LOGIN).email
+          }
+          console.log(item.quantity)
+          const action = orderApi (payload)
+          dispatch (action)
+    }}>Order</button>
         </tr>
           })}
         </tbody>
     </table>
+   
    </div>
   )
 }

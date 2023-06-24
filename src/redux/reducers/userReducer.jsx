@@ -44,9 +44,9 @@ export const registerApi = (user) => {
         dispatch(action);
         alert(`Welcome onboard ${user.email}`)
       } catch (error) {
-        // Handle the error here
+     
         console.error('Error:', error);
-        // You can dispatch an error action or perform other error handling logic if needed
+        
       }
     };
   };

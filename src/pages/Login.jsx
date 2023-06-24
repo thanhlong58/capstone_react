@@ -1,28 +1,30 @@
 import React from 'react'
-import {useFormik} from 'formik'
+import { useFormik } from 'formik'
 import * as yup from 'yup'
-import { useSelector,useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { loginActionApi } from '../redux/reducers/loginReducer'
+import styles from '../styles/login.module.scss'
 const Login = () => {
   const dispatch = useDispatch()
   const frm = useFormik({
-    initialValues : {
+    initialValues: {
       email: '',
-      password : '',
-    
+      password: '',
+
 
     },
 
     onSubmit: (values) => {
-     console.log('values', values)
-      const action  = loginActionApi (values);
-      dispatch(action )
+      console.log('values', values)
+      const action = loginActionApi(values);
+      dispatch(action)
     }
 
   })
 
   return (
-   <form onSubmit={frm.handleSubmit}  className='container'>
+    <div className='container'>
+      {/* <form onSubmit={frm.handleSubmit}  className='container'>
     <h3>Login</h3>
     <div className='form-group'>
     <p>Email</p>
@@ -37,7 +39,33 @@ const Login = () => {
       <button type='submit' className='btn btn-primary'>Login</button>
     </div>
     
-   </form>
+   </form> */}
+      <div className='mt-5'>
+        <div className={styles['styles']}>
+          <div className={styles['login-box']}>
+            <h2 className={styles['login-heading']}>Login</h2>
+            <form onSubmit={frm.handleSubmit}>
+              <div className={styles['user-box']}>
+                <input type="text" name="email" id="email" onChange={frm.handleChange} />
+                <label>Email</label>
+              </div>
+              <div className={styles['user-box']}>
+                <input type="password" name="password" id="password" onChange={frm.handleChange} />
+                <label>Password</label>
+              </div>
+              <button type='submit' className={`btn btn-transparent ${styles['submit-button']}`}>
+                <span />
+                <span />
+                <span />
+                <span />
+                Submit
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
   )
 }
 
