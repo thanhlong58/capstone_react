@@ -3,7 +3,7 @@ import { useFormik } from 'formik'
 import * as yup from 'yup'
 import { useSelector, useDispatch } from 'react-redux'
 import { loginActionApi } from '../redux/reducers/loginReducer'
-import styles from '../styles/login.module.scss'
+import styles from '../css/login.module.css'
 const Login = () => {
   const dispatch = useDispatch()
   const frm = useFormik({
@@ -23,7 +23,7 @@ const Login = () => {
   })
 
   return (
-    <div className='container'>
+    <div id={styles.loginCss} className='container'>
       {/* <form onSubmit={frm.handleSubmit}  className='container'>
     <h3>Login</h3>
     <div className='form-group'>

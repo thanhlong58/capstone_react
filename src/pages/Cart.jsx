@@ -14,7 +14,7 @@ const Cart = () => {
     }
   
   return (
-   <div className='container'>
+   <div className='container bg-white'>
     Cart
     <table className='table'>
         <thead>
