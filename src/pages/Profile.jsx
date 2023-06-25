@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getProfileApi, updateUserApi } from '../redux/reducers/loginReducer';
+import { getProfileApi, upLoadAvatarApi, updateUserApi, uploadAvatarAction } from '../redux/reducers/loginReducer';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { favouriteActionApi } from '../redux/reducers/productsReducer';
 
 const Profile = () => {
+  const { avatar } = useSelector(state => state.loginReducer)
+  console.log(avatar)
   const { userProfile } = useSelector((state) => state.loginReducer);
   const { arrProduct } = useSelector((state) => state.productsReducer);
   const { favouriteProducts } = useSelector((state) => state.productsReducer);
@@ -38,7 +40,19 @@ const Profile = () => {
     },
     onSubmit: (values) => {
       console.log(values);
-      const action = updateUserApi(values);
+      const action = upLoadAvatarApi(values);
+      dispatch(action);
+    },
+  });
+
+  const ava = useFormik({
+    initialValues: {
+      customFile: null,
+    },
+    onSubmit: (values) => {
+      console.log('value',values)
+      var jsonFile = JSON.stringify(values);
+      const action = upLoadAvatarApi(jsonFile)
       dispatch(action);
     },
   });
@@ -48,20 +62,31 @@ const Profile = () => {
   const handleTabChange = (tab) => {
     setActiveTab(tab);
   };
-  
-  const handleAvatarChange = () => {
-    // Handle avatar change logic here
-    console.log('Change avatar');
-  };
 
 
+
+ 
   return (
     <div className='container bg-light'>
       <div className='row'>
+
         <div className='col-4'>
-        <a style={{cursor:'pointer'}} onClick={handleAvatarChange}>
-            <img  className='rounded-circle' src='https://i.pravatar.cc?u=1' width={200} alt='Avatar' />
+          <a style={{ cursor: 'pointer' }} >
+            <img className='rounded-circle' src={avatar} width={200} alt='Avatar' />
           </a>
+          <form onSubmit={ava.handleSubmit}>
+            <input
+              type="file"
+              class="form-control"
+              id="customFile"
+              name="customFile"
+              onChange={(event) => {
+                ava.setFieldValue('customFile', event.currentTarget.files[0]);
+              }}
+            />
+            <button type="submit" className="btn btn-primary">Upload Avatar</button>
+          </form>
+
         </div>
         <div className='col-8'>
           <form onSubmit={frm.handleSubmit}>

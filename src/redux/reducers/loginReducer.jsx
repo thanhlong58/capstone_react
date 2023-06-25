@@ -8,8 +8,8 @@ const initialState = {
     userProfile :  {
 
     },
-    userUpdate : {}
-
+    userUpdate : {},
+    avatar : {}
 }
 
 const loginReducer = createSlice({
@@ -24,14 +24,44 @@ const loginReducer = createSlice({
     },
     UpdateUserAction : (state,action) => {
       state.userUpdate = action.payload
+    },
+    uploadAvatarAction: (state, action) => {
+      state.avatar = action.payload;
     }
   }
+ 
   
 });
 
-export const {loginAction,setProfileAction,UpdateUserAction } = loginReducer.actions
+
+export const {loginAction,setProfileAction,UpdateUserAction,uploadAvatarAction } = loginReducer.actions
 
 export default loginReducer.reducer
+
+
+
+//upload avatar 
+
+export const upLoadAvatarApi = (image) => {
+  return async (dispatch) => {
+    try {
+      const res = await axios ({
+        url : 'https://shop.cyberlearn.vn/api/Users/uploadavatar',
+        method : 'POST',
+        data : image
+      
+      })
+      
+      console.log(res)
+       const action = uploadAvatarAction(res.data.content)
+       dispatch(action)
+    }catch(err) {
+      console.log(err)
+    }
+    
+
+  }
+}
 
 
 //asyn actiom 
@@ -109,3 +139,5 @@ export const updateUserApi =  (user) => {
        }
   }
 }
+
+
