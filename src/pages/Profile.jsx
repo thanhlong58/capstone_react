@@ -12,7 +12,7 @@ const Profile = () => {
   const { arrProduct } = useSelector((state) => state.productsReducer);
   const { favouriteProducts } = useSelector((state) => state.productsReducer);
   console.log(userProfile);
-   
+  console.log(favouriteProducts)
   const dispatch = useDispatch();
   const getFav = async () => {
     const action = favouriteActionApi;
@@ -69,32 +69,31 @@ const Profile = () => {
   return (
     <div className='container bg-light'>
       <div className='row'>
-
         <div className='col-4'>
-          <a style={{ cursor: 'pointer' }} >
-            <img className='rounded-circle' src={userProfile.avatar} width={200} alt='Avatar' />
-          </a>
-          <form onSubmit={ava.handleSubmit}>
-            <input
-              type="file"
-              class="form-control"
-              id="customFile"
-              name="customFile"
-              onChange={(event) => {
-                ava.setFieldValue('customFile', event.currentTarget.files[0]);
-              }}
-            />
-            <button type="submit" className="btn btn-primary">Upload Avatar</button>
-          </form>
-
+          <div className='text-center'>
+            <label htmlFor='avatarUpload' className='avatar-label'>
+              <img width={200} className='rounded-circle avatar-img' src={userProfile.avatar} alt='Avatar' />
+              <input
+                type='file'
+                id='avatarUpload'
+                name='customFile'
+                onChange={(event) => {
+                  ava.setFieldValue('customFile', event.currentTarget.files[0]);
+                }}
+              />
+            </label>
+            <button type='submit' className='btn btn-primary avatar-btn' onClick={ava.handleSubmit}>
+              Upload Avatar
+            </button>
+          </div>
         </div>
         <div className='col-8'>
           <form onSubmit={frm.handleSubmit}>
             <div className='row'>
               <div className='col-6 form-group'>
-                <p>Email</p>
+                <label htmlFor='email'>Email</label>
                 <input
-                  className='w-50 form-control'
+                  className='w-100 form-control'
                   id='email'
                   name='email'
                   onChange={frm.handleChange}
@@ -102,9 +101,9 @@ const Profile = () => {
                 />
               </div>
               <div className='col-6 form-group'>
-                <p>Name</p>
+                <label htmlFor='name'>Name</label>
                 <input
-                  className='w-50 form-control'
+                  className='w-100 form-control'
                   id='name'
                   name='name'
                   value={frm.values.name}
@@ -115,9 +114,9 @@ const Profile = () => {
 
             <div className='row'>
               <div className='col-6 form-group'>
-                <p>Phone</p>
+                <label htmlFor='phone'>Phone</label>
                 <input
-                  className='w-50 form-control'
+                  className='w-100 form-control'
                   id='phone'
                   name='phone'
                   value={frm.values.phone}
@@ -125,10 +124,10 @@ const Profile = () => {
                 />
               </div>
               <div className='col-6 form-group'>
-                <p>Password</p>
+                <label htmlFor='password'>Password</label>
                 <input
                   type='password'
-                  className='w-50 form-control'
+                  className='w-100 form-control'
                   id='password'
                   name='password'
                   value={frm.values.password}
@@ -136,33 +135,45 @@ const Profile = () => {
                 />
               </div>
             </div>
-            <p>Gender</p>
-            <input
-              type='radio'
-              name='gender'
-              id='male'
-              checked={frm.values.gender === true}
-              onChange={() => frm.setFieldValue('gender', true)}
-            />
-            Male{' '}
-            <span>
-              {' '}
-              <input
-                type='radio'
-                name='gender'
-                id='female'
-                checked={frm.values.gender === false}
-                onChange={() => frm.setFieldValue('gender', false)}
-              />
-              Female
-            </span>
-
-            <button type='submitre' className='btn btn-success'>
+            <div className='form-group'>
+              <label>Gender</label>
+              <div className='form-check'>
+                <input
+                  type='radio'
+                  className='form-check-input'
+                  name='gender'
+                  id='male'
+                  checked={frm.values.gender === true}
+                  onChange={() => frm.setFieldValue('gender', true)}
+                />
+                <label className='form-check-label' htmlFor='male'>
+                  Male
+                </label>
+              </div>
+              <div className='form-check'>
+                <input
+                  type='radio'
+                  className='form-check-input'
+                  name='gender'
+                  id='female'
+                  checked={frm.values.gender === false}
+                  onChange={() => frm.setFieldValue('gender', false)}
+                />
+                <label className='form-check-label' htmlFor='female'>
+                  Female
+                </label>
+                <button style={{marginLeft:'400px'}} type='submit' className='btn btn-success w-25 '>
               Update
             </button>
+                
+              </div>
+              
+            </div>
+           
           </form>
         </div>
       </div>
+
 
       <ul className='nav nav-tabs mt-5'>
         <li className='nav-item'>
@@ -225,25 +236,25 @@ const Profile = () => {
         {activeTab === 'favoriteProducts' && (
           <div className='tab-pane fade show active' id='favoriteProducts'>
             <h3>Favorite Products</h3>
-            <table>
+            <table className='table' >
               <thead>
-                <tr>
-                  <th>ID</th>
+                
+                  
                   <th>Image</th>
                   <th>Name</th>
-                  <th>Price</th>
-                </tr>
+                  
+                
               </thead>
               <tbody>
                 {favouriteProducts?.map((item, index) => {
                   return (
                     <tr key={index}>
-                      <td>{item.id}</td>
+                     
                       <td>
                         <img src={item.image} alt='...' width={50} />
                       </td>
                       <td>{item.name}</td>
-                      <td>{item.price}</td>
+                     
                     </tr>
                   );
                 })}
