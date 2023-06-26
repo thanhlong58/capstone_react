@@ -7,6 +7,8 @@ import { addtoCartAction } from '../redux/reducers/cartReducer';
 import { orderBy } from 'lodash';
 import style from '../assets/HomePage.module.css';
 import styles from '../assets/CardItem.module.css';
+import { Carousel } from 'antd';
+import video from '../assets/videos/sneaker.mp4'  
 
 const Home = () => {
   const numberToWords = require('number-to-words');
@@ -38,7 +40,7 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    // Initialize favorite status for each sneaker
+    
     const initialFavoriteStatus = {};
     arrProduct.forEach((sneaker) => {
       initialFavoriteStatus[sneaker.id] = favouriteProducts.some((product) => product.id === sneaker.id);
@@ -56,7 +58,7 @@ const Home = () => {
     updatedStatus[sneakerId] = !isFavorite;
     setFavoriteStatus(updatedStatus);
 
-    // Dispatch the appropriate action based on the like status
+ 
     if (isFavorite) {
       const action = unlikeActionApi(sneakerId);
       dispatchComponent(action);
@@ -85,9 +87,31 @@ const Home = () => {
     const action = sortProductAction(sortedProducts);
     dispatchComponent(action);
   }, [sortBy]);
+  const contentStyle = {
+    width: '100%',
+    height: '100%',
+    color: '#fff',
+    lineHeight: '160px',
+    textAlign: 'center',
+    background: '#364d79',
+  };
+  
+ 
 
   return (
+    
     <div className="container">
+       <Carousel >
+      <div>
+        
+      <video style={contentStyle} autoPlay muted loop>
+          <source src={video} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+    
+      </div>
+      
+    </Carousel>
       <div className={style['search-bar'] + ' mt-4'}>
         <input type="text" placeholder="Search product by name" />
         <select onChange={handleSort} className="mx-2" name="sort-by-price">

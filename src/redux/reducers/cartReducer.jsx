@@ -3,15 +3,7 @@ import axios from 'axios';
 const initialState = {
 
     arrCart : [],
-    arrOrder : {
-      orderDetail: [
-        {
-          productId: "",
-          quantity: 0
-        }
-      ],
-      email: ""
-    }
+    orderDetail: null
 
 }
 
@@ -43,12 +35,16 @@ const cartReducer = createSlice({
      }
     },
     orderAction  : (state,action) => {
-      state.arrOrder = action.payload
+      state.orderDetail = action.payload
+    },
+    clearCartAction : (state,action)=> {
+      state.arrCart = [];
+
     }
   }
 });
 
-export const {addtoCartAction,deleteAction,changeQuantity,orderAction} = cartReducer.actions
+export const {addtoCartAction,deleteAction,changeQuantity,orderAction,clearCartAction} = cartReducer.actions
 
 export default cartReducer.reducer
 

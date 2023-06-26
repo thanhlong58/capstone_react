@@ -12,7 +12,7 @@ const Profile = () => {
   const { arrProduct } = useSelector((state) => state.productsReducer);
   const { favouriteProducts } = useSelector((state) => state.productsReducer);
   console.log(userProfile);
-
+   
   const dispatch = useDispatch();
   const getFav = async () => {
     const action = favouriteActionApi;
@@ -72,7 +72,7 @@ const Profile = () => {
 
         <div className='col-4'>
           <a style={{ cursor: 'pointer' }} >
-            <img className='rounded-circle' src={avatar} width={200} alt='Avatar' />
+            <img className='rounded-circle' src={userProfile.avatar} width={200} alt='Avatar' />
           </a>
           <form onSubmit={ava.handleSubmit}>
             <input
@@ -184,46 +184,43 @@ const Profile = () => {
       </ul>
 
       <div className='tab-content'>
-        {activeTab === 'orderHistory' && (
-          <div className='tab-pane fade show active' id='orderHistory'>
-            <h3>Order History</h3>
-            {userProfile.ordersHistory?.map((item, index) => {
-              const orderDetail = item.orderDetail[0];
-
-              return (
-                <table key={index} className='table table-striped'>
-                  <thead>
-                    <tr>
-                      <th>id</th>
-                      <th>img</th>
-                      <th>name</th>
-                      <th>price</th>
-                      <th>quantity</th>
-                      <th>total</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>{item.id}</td>
-                      <td>
-                        <img
-                          width={50}
-                          src={orderDetail.image}
-                          alt='Product'
-                          className='product-image'
-                        />
-                      </td>
-                      <td>{orderDetail.name}</td>
-                      <td>${orderDetail.price}</td>
-                      <td>{orderDetail.quantity}</td>
-                      <td>${orderDetail.price * orderDetail.quantity}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              );
-            })}
-          </div>
-        )}
+      {activeTab === 'orderHistory' && (
+  <div className='tab-pane fade show active' id='orderHistory'>
+    <h3>Order History</h3>
+    {userProfile.ordersHistory?.map((order, index) => (
+      <table key={index} className='table table-striped'>
+        <span className='text-success' >Order have been placed on {order.date}</span>
+        <thead>
+          <tr>
+            
+            <th>img</th>
+            <th>name</th>
+            <th>price</th>
+            
+          </tr>
+        </thead>
+        <tbody>
+          {order.orderDetail.map((item, itemIndex) => (
+            <tr key={itemIndex}>
+             
+              <td>
+                <img
+                  width={50}
+                  src={item.image}
+                  alt='Product'
+                  className='product-image'
+                />
+              </td>
+              <td>{item.name}</td>
+              <td>${item.price}</td>
+            
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    ))}
+  </div>
+)}
 
         {activeTab === 'favoriteProducts' && (
           <div className='tab-pane fade show active' id='favoriteProducts'>
