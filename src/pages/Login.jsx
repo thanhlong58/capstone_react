@@ -25,22 +25,7 @@ const Login = () => {
 
   return (
     <div id={styles.loginCss} className='container'>
-      {/* <form onSubmit={frm.handleSubmit}  className='container'>
-    <h3>Login</h3>
-    <div className='form-group'>
-    <p>Email</p>
-     <input className='form-control w-25' id='email' name='email' onChange={frm.handleChange} />
-    </div>
-    <div className='form-group'>
-    <p>Password</p>
-     <input type='password' className='form-control w-25' id='password' name='password' onChange={frm.handleChange} />
-    </div>
-
-    <div className='form-group mt-4'>
-      <button type='submit' className='btn btn-primary'>Login</button>
-    </div>
-    
-   </form> */}
+     
       <div className='mt-5'>
         <div className={styles['styles']}>
           <div className={styles['login-box']}>

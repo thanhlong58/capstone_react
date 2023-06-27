@@ -25,7 +25,7 @@ const Home = () => {
     setCurrentPage(page);
   };
   const getProductApi = async () => {
-    const actionAsync = getProductActionApi(selectedCategory); // Pass selected category as a parameter
+    const actionAsync = getProductActionApi(selectedCategory);
     dispatchComponent(actionAsync);
   };
 
@@ -122,7 +122,7 @@ const Home = () => {
     <div className={style['search-bar'] + ' mt-4'}>
         <select
           onChange={handleSort}
-          className={`mx-2 ${style['select-sort']}`} // Apply custom style class
+          className={`mx-2 ${style['select-sort']}`}
           name="sort-by-price"
         >
           <option value="none">Sort by price</option>
@@ -133,7 +133,7 @@ const Home = () => {
           name=""
           id=""
           onChange={(e) => setSelectedCategory(e.target.value)}
-          className={style['select-category']} // Apply custom style class
+          className={style['select-category']} 
         >
           <option value="">All Product</option>
           <option value="nike">Nike</option>
