@@ -4,8 +4,9 @@ import { getProfileApi, upLoadAvatarApi, updateUserApi, uploadAvatarAction } fro
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { favouriteActionApi } from '../redux/reducers/productsReducer';
-
+import { Pagination } from 'antd';  
 const Profile = () => {
+  const [currentPage, setCurrentPage] = useState(1);
   const { avatar } = useSelector(state => state.loginReducer)
   console.log(avatar)
   const { userProfile } = useSelector((state) => state.loginReducer);
@@ -29,7 +30,10 @@ const Profile = () => {
   useEffect(() => {
     getFav();
   }, []);
-
+  
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
   const frm = useFormik({
     initialValues: {
       email: userProfile.email || '',
@@ -198,7 +202,7 @@ const Profile = () => {
       {activeTab === 'orderHistory' && (
   <div className='tab-pane fade show active' id='orderHistory'>
     <h3>Order History</h3>
-    {userProfile.ordersHistory?.map((order, index) => (
+    {userProfile.ordersHistory?.slice((currentPage - 1) * 2, currentPage * 2).map((order, index) => (
       <table key={index} className='table table-striped'>
         <span className='text-success' >Order have been placed on {order.date}</span>
         <thead>
@@ -211,7 +215,7 @@ const Profile = () => {
           </tr>
         </thead>
         <tbody>
-          {order.orderDetail.map((item, itemIndex) => (
+          {order.orderDetail?.map((item, itemIndex) => (
             <tr key={itemIndex}>
              
               <td>
@@ -263,6 +267,14 @@ const Profile = () => {
           </div>
         )}
       </div>
+      <div className='text-center bg-light' style={{ display: 'inline-block' }}>
+          <Pagination
+            current={currentPage}
+            total={Math.ceil(userProfile.ordersHistory?.length / 2)} // Show only 1 page
+            pageSize={1}
+            onChange={handlePageChange}
+          />
+        </div>
     </div>
   );
 };

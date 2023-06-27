@@ -87,4 +87,37 @@
   .add-to-cart-btn:hover {
     background-color: #ffca2d;
   }
+
+  .select-sort {
+    padding: 8px 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #333;
+    background-color: #fff;
+    transition: border-color 0.3s ease;
+  }
+  
+  .select-sort:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+  }
+  
+  /* Custom styles for category select */
+  .select-category {
+    padding: 8px 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #333;
+    background-color: #fff;
+    transition: border-color 0.3s ease;
+  }
+  
+  .select-category:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+  }
   

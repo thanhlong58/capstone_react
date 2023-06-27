@@ -1,11 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit'
 import axios from 'axios';
+import Swal from 'sweetalert2'
 const initialState = {
 
     arrCart : [],
     orderDetail: null
 
 }
+
 
 const cartReducer = createSlice({
   name: 'cartReducer',
@@ -32,7 +34,16 @@ const cartReducer = createSlice({
      let item = state.arrCart.find(item =>item.id == sneaker.id) ;
      if (item) {
       item.quantity += sneaker.quantity
+      if(item.quantity < 1) {
+        if(window.confirm('You want to delete this item?')) {
+          state.arrCart = state.arrCart.filter(item=> item.id !== sneaker.id)
+        }else {
+           item.quantity -= sneaker.quantity
+        }
+      }
+     
      }
+    
     },
     orderAction  : (state,action) => {
       state.orderDetail = action.payload

@@ -8,7 +8,8 @@ import { orderBy } from 'lodash';
 import style from '../assets/HomePage.module.css';
 import styles from '../assets/CardItem.module.css';
 import { Carousel } from 'antd';
-import video from '../assets/videos/sneaker.mp4'  
+import video from '../assets/videos/sneaker.webm'
+import { Pagination } from 'antd';  
 
 const Home = () => {
   const numberToWords = require('number-to-words');
@@ -18,7 +19,11 @@ const Home = () => {
   const { userLogin } = useSelector((state) => state.loginReducer);
   const [favoriteStatus, setFavoriteStatus] = useState({});
   console.log(favouriteProducts);
+  const [currentPage, setCurrentPage] = useState(1);
 
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
   const getProductApi = async () => {
     const actionAsync = getProductActionApi(selectedCategory); // Pass selected category as a parameter
     dispatchComponent(actionAsync);
@@ -101,25 +106,35 @@ const Home = () => {
   return (
     
     <div className="container">
+     
        <Carousel >
       <div>
         
       <video style={contentStyle} autoPlay muted loop>
-          <source src={video} type="video/mp4" />
+          <source src={video} type="video/webm" />
           Your browser does not support the video tag.
         </video>
     
       </div>
       
     </Carousel>
-      <div className={style['search-bar'] + ' mt-4'}>
-        <input type="text" placeholder="Search product by name" />
-        <select onChange={handleSort} className="mx-2" name="sort-by-price">
+
+    <div className={style['search-bar'] + ' mt-4'}>
+        <select
+          onChange={handleSort}
+          className={`mx-2 ${style['select-sort']}`} // Apply custom style class
+          name="sort-by-price"
+        >
           <option value="none">Sort by price</option>
           <option value="desc">Descending</option>
           <option value="asc">Ascending</option>
         </select>
-        <select name="" id="" onChange={(e) => setSelectedCategory(e.target.value)}>
+        <select
+          name=""
+          id=""
+          onChange={(e) => setSelectedCategory(e.target.value)}
+          className={style['select-category']} // Apply custom style class
+        >
           <option value="">All Product</option>
           <option value="nike">Nike</option>
           <option value="adidas">Adidas</option>
@@ -127,49 +142,13 @@ const Home = () => {
           <option value="converse">Converse</option>
         </select>
       </div>
-      {/* <div className={'row ' + style['card-container'] + ' mt-5'}>
-        {arrProduct.map((sneaker, index) => {
-          const isFavorite = favoriteStatus[sneaker.id];
-          const heartClassName = isFavorite ? 'fa fa-heart text-danger' : 'fa fa-heart';
-
-          return (
-            <div className="col-3" key={index}>
-              <div className={style.card}>
-                <img src={sneaker.image} alt="Sneaker" />
-                <div className={style['card-body']}>
-                  <i
-                    style={{ cursor: 'pointer' }}
-                    className={heartClassName}
-                    onClick={() => handleLikeClick(sneaker.id)}
-                  ></i>
-                  <p className={style['product-name']}>{sneaker.name}</p>
-                  <h3 className={style.price}>{sneaker.price}</h3>
-                  <NavLink className={'btn btn-dark ' + style['view-detail-btn']} to={`/detail/${sneaker.id}`}>
-                    View detail
-                  </NavLink>
-                  <button
-                    className={'btn btn-dark ' + style['add-to-cart-btn']}
-                    onClick={() => {
-                      const action = addtoCartAction(sneaker);
-                      dispatchComponent(action);
-                    }}
-                  >
-                    Add to cart <i className="fa fa-cart-plus"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-          );
-        })}
-      </div> */}
-
-      <div className='mt-5'>
+      <div >
           <div className='row '>
-             {arrProduct.map((item,index)=> {
+             {arrProduct.slice((currentPage - 1) * 6, currentPage * 6).map((item,index)=> {
                const isFavorite = favoriteStatus[item.id];
                const heartClassName = isFavorite ? 'fa fa-heart text-danger' : 'fa fa-heart';
      
-              return <div className='col-3 mt-4 card-group' key={index}>
+              return <div className='col-4 mt-5 card-group' key={index}>
                 <div className={styles['product-card']}>
       <div className={styles['logo-cart']}>
         {/*<img src="images/logo.jpg" alt="logo">*/}
@@ -204,7 +183,7 @@ const Home = () => {
         </div>
       </div>  
       <div className={styles.button}>
-        <div className={styles['button-layer']} />
+        <div className={styles['button-layer'] } />
         <button  onClick={() => {
                       const action = addtoCartAction(item);
                       dispatchComponent(action);
@@ -215,6 +194,17 @@ const Home = () => {
              })}
           </div>
       </div>
+      <div className='mt-5 d-flex justify-content-center'>
+  <div className='text-center bg-light' style={{ display: 'inline-block' }}>
+    <Pagination
+      defaultCurrent={1}
+      total={arrProduct.length}
+      pageSize={6}
+      onChange={handlePageChange}
+    />
+  </div>
+</div>
+      
     </div>
   );
 };

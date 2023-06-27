@@ -4,6 +4,7 @@ import * as yup from 'yup'
 import { useSelector, useDispatch } from 'react-redux'
 import { loginActionApi } from '../redux/reducers/loginReducer'
 import styles from '../css/login.module.css'
+
 const Login = () => {
   const dispatch = useDispatch()
   const frm = useFormik({
@@ -61,6 +62,10 @@ const Login = () => {
                 Submit
               </button>
             </form>
+            <div className='mt-3'>
+            
+            </div>
+           
           </div>
         </div>
       </div>
