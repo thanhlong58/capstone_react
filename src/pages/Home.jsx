@@ -31,18 +31,12 @@ const Home = () => {
 
   const [selectedCategory, setSelectedCategory] = useState('');
 
-  const getFav = async () => {
-    const action = favouriteActionApi;
-    dispatchComponent(action);
-  };
-
+  
   useEffect(() => {
     getProductApi();
   }, []);
 
-  useEffect(() => {
-    getFav();
-  }, []);
+
 
   useEffect(() => {
     

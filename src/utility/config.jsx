@@ -2,7 +2,8 @@
 
 import axios from "axios";
 import { customNavigate } from "..";
-
+import Swal from "sweetalert2";
+export const ARR_CART = 'arrCart'
 export const USER_LOGIN = 'userLogin';
 export const TOKEN = 'accessToken';
 export const DOMAIN = 'https://shop.cyberlearn.vn';
@@ -100,6 +101,16 @@ http.interceptors.response.use((res)=> {
         customNavigate.push('/');
         return;
 
+    }
+    if(err.response?.status === 500) {
+        console.log(err.response?.status)
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: '"An internal server error occurred. Please try again later.',
+            footer: '<a href="">Why do I have this issue?</a>'
+          })
+       return;
     }
     return Promise.reject(err);
 });

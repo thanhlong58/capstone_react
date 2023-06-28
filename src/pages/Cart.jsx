@@ -88,9 +88,11 @@
             })}
           </tbody>
       </table>
-      <button className='btn btn-success' onClick={()=> {
-         handleOrder()
-      }}>Order</button>
+      <div className='d-flex justify-content-end p-3'>
+        <button className='btn btn-success' onClick={() => handleOrder()}>
+          Submit Order
+        </button>
+      </div>
     
     </div>
     )

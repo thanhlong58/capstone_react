@@ -4,7 +4,10 @@ import { getProfileApi, upLoadAvatarApi, updateUserApi, uploadAvatarAction } fro
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { favouriteActionApi } from '../redux/reducers/productsReducer';
-import { Pagination } from 'antd';  
+import { Pagination } from 'antd';
+import  styles from '../styles/profile.module.css'
+
+
 const Profile = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const { avatar } = useSelector(state => state.loginReducer)
@@ -30,7 +33,7 @@ const Profile = () => {
   useEffect(() => {
     getFav();
   }, []);
-  
+
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
@@ -44,7 +47,7 @@ const Profile = () => {
     },
     onSubmit: (values) => {
       console.log(values);
-      const action = upLoadAvatarApi(values);
+      const action = updateUserApi(values);
       dispatch(action);
     },
   });
@@ -54,7 +57,7 @@ const Profile = () => {
       customFile: null,
     },
     onSubmit: (values) => {
-      console.log('value',values)
+      console.log('value', values)
       var jsonFile = JSON.stringify(values);
       const action = upLoadAvatarApi(jsonFile)
       dispatch(action);
@@ -69,7 +72,7 @@ const Profile = () => {
 
 
 
- 
+
   return (
     <div className='container bg-light'>
       <div className='row'>
@@ -166,14 +169,14 @@ const Profile = () => {
                 <label className='form-check-label' htmlFor='female'>
                   Female
                 </label>
-                <button style={{marginLeft:'400px'}} type='submit' className='btn btn-success w-25 '>
-              Update
-            </button>
-                
+                <button style={{ marginLeft: '400px' }} type='submit' className='btn btn-success w-25 '>
+                  Update
+                </button>
+
               </div>
-              
+
             </div>
-           
+
           </form>
         </div>
       </div>
@@ -199,82 +202,90 @@ const Profile = () => {
       </ul>
 
       <div className='tab-content'>
-      {activeTab === 'orderHistory' && (
-  <div className='tab-pane fade show active' id='orderHistory'>
-    <h3>Order History</h3>
-    {userProfile.ordersHistory?.slice((currentPage - 1) * 2, currentPage * 2).map((order, index) => (
-      <table key={index} className='table table-striped'>
-        <span className='text-success' >Order have been placed on {order.date}</span>
-        <thead>
-          <tr>
-            
-            <th>img</th>
-            <th>name</th>
-            <th>price</th>
-            
-          </tr>
-        </thead>
-        <tbody>
-          {order.orderDetail?.map((item, itemIndex) => (
-            <tr key={itemIndex}>
-             
-              <td>
-                <img
-                  width={50}
-                  src={item.image}
-                  alt='Product'
-                  className='product-image'
-                />
-              </td>
-              <td>{item.name}</td>
-              <td>${item.price}</td>
-            
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    ))}
-  </div>
-)}
+        {activeTab === 'orderHistory' && (
+          <div className='tab-pane fade show active' id='orderHistory'>
+           
+            {userProfile.ordersHistory?.slice((currentPage - 1) * 2, currentPage * 3).map((order, index) => (
+              <table key={index} className='table table-striped'>
+                <span className='text-success' >Order have been placed on {order.date}</span>
+                <thead>
+                  <tr>
 
-        {activeTab === 'favoriteProducts' && (
-          <div className='tab-pane fade show active' id='favoriteProducts'>
-            <h3>Favorite Products</h3>
-            <table className='table' >
-              <thead>
-                
-                  
-                  <th>Image</th>
-                  <th>Name</th>
-                  
-                
-              </thead>
-              <tbody>
-                {favouriteProducts?.map((item, index) => {
-                  return (
-                    <tr key={index}>
-                     
+                    <th>img</th>
+                    <th>name</th>
+                    <th>price</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+                  {order.orderDetail?.map((item, itemIndex) => (
+                    <tr key={itemIndex}>
+
                       <td>
-                        <img src={item.image} alt='...' width={50} />
+                        <img
+                          width={50}
+                          src={item.image}
+                          alt='Product'
+                          className='product-image'
+                        />
                       </td>
                       <td>{item.name}</td>
-                     
+                      <td>${item.price}</td>
+
                     </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+                  ))}
+                </tbody>
+              </table>
+            ))}
+             <div className='text-center bg-light' style={{ display: 'inline-block' }}>
+        <Pagination
+          current={currentPage}
+          total={Math.ceil(userProfile.ordersHistory?.length / 2)} // Show only 1 page
+          pageSize={1}
+          onChange={handlePageChange}
+        />
+      </div>
           </div>
         )}
+
+{activeTab === 'favoriteProducts' && (
+  <div className='tab-pane fade show active' id='favoriteProducts'>
+   
+    <table className='table'>
+      <thead>
+        <tr>
+          <th style={{ textAlign: 'center' }}>Image</th>
+          <th style={{ textAlign: 'center' }}>Name</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {favouriteProducts?.slice((currentPage - 1) * 2, currentPage * 6).map((item, index) => {
+          return (
+            <tr key={index}>
+              <td style={{ textAlign: 'center' }}>
+                <img src={item.image} alt='...' width={100} />
+              </td>
+              <td className='fs-4' style={{ textAlign: 'center' }}>{item.name}</td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+    <div className='text-center bg-light' style={{ display: 'inline-block' }}>
+    <Pagination
+      defaultCurrent={1}
+      total={Math.ceil(favouriteProducts?.length / 6)} 
+       pageSize={1}
+      onChange={handlePageChange}
+    />
+  </div>
+  </div>
+  
+)}
+
       </div>
-      <div className='text-center bg-light' style={{ display: 'inline-block' }}>
-          <Pagination
-            current={currentPage}
-            total={Math.ceil(userProfile.ordersHistory?.length / 2)} // Show only 1 page
-            pageSize={1}
-            onChange={handlePageChange}
-          />
-        </div>
+     
     </div>
   );
 };

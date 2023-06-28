@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import axios from 'axios';
 import { USER_LOGIN, getStoreJson, http, setStoreJson } from '../../utility/config';
 import { customNavigate } from '../..';
-
+import Swal from 'sweetalert2';
 const initialState = {
     userLogin : getStoreJson(USER_LOGIN),
     userProfile :  {
@@ -78,7 +78,13 @@ export const loginActionApi = (user) => {
             const action = loginAction(res.data.content);
             dispatch(action)
 
-            alert(`Hello ${user.email}`)
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: `Hello ${user.email}`,
+              showConfirmButton: false,
+              timer: 1500
+            })
             setStoreJson(USER_LOGIN,res.data.content)
         }
         catch (err) {
@@ -136,6 +142,13 @@ export const updateUserApi =  (user) => {
        if(res) {
         const action = UpdateUserAction(res.data.content)
         dispatch(action)
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'You have updated your profile info.',
+          showConfirmButton: false,
+          timer: 1500
+        })
        }
   }
 }

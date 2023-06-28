@@ -1,9 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
 import axios from 'axios';
 import Swal from 'sweetalert2'
+import { ARR_CART, getStore, getStoreJson, setStoreJson } from '../../utility/config';
 const initialState = {
 
-    arrCart : [],
+    arrCart : getStoreJson(ARR_CART),
     orderDetail: null
 
 }
@@ -21,13 +22,15 @@ const cartReducer = createSlice({
      }else  {
         state.arrCart.push(item )
      }
-    
+    setStoreJson(ARR_CART,state.arrCart)
+     
     }, 
     deleteAction : (state,action) => {
       let indexDel = state.arrCart.findIndex(item=> item.id  == action.payload);
       if(indexDel !== 1) {
         state.arrCart.splice(indexDel,1)
       }
+      setStoreJson(ARR_CART,state.arrCart)
     },
     changeQuantity: (state,action) => {
      const sneaker = action.payload;
@@ -41,15 +44,18 @@ const cartReducer = createSlice({
            item.quantity -= sneaker.quantity
         }
       }
+      setStoreJson(ARR_CART,state.arrCart)
      
      }
     
     },
     orderAction  : (state,action) => {
       state.orderDetail = action.payload
+      setStoreJson(ARR_CART,state.arrCart)
     },
     clearCartAction : (state,action)=> {
       state.arrCart = [];
+      setStoreJson(ARR_CART,state.arrCart)
 
     }
   }
