@@ -2,9 +2,13 @@ import { createSlice } from '@reduxjs/toolkit'
 import axios from 'axios';
 import Swal from 'sweetalert2'
 import { ARR_CART, getStore, getStoreJson, setStoreJson } from '../../utility/config';
+const initialArrCart = getStoreJson(ARR_CART);
+const defaultArrCart = Array.isArray(initialArrCart) ? initialArrCart : [];
+
+
 const initialState = {
 
-    arrCart : getStoreJson(ARR_CART),
+    arrCart : defaultArrCart,
     orderDetail: null
 
 }

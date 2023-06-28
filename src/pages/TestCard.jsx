@@ -1,23 +1,25 @@
 import React from 'react'
-import { Carousel } from 'antd';
-const contentStyle = {
-  height: '160px',
-  color: '#fff',
-  lineHeight: '160px',
-  textAlign: 'center',
-  background: '#364d79',
-};
+import { useState } from 'react';
 const TestCard = () => {
+  const [inputA, setInputA] = useState({ myInput: "" }); 
+  console.log(inputA)
   return (
-    <div>
-    <video controls>
-  <source src="../assets/videos/sneaker.mp4" type="video/mp4" />
-  Your browser does not support the video tag.
-</video>
-
-
-    </div>
-  )
+    <div className="container"> 
+ <div className="row mt-5 text-center"> 
+ <div className="col-6"> 
+ <input 
+ onChange={(event) => { 
+ setInputA({ ...inputA, myInput: event.target.value
+  });
+ }} 
+ name="myInput" 
+ type="text" 
+ /> 
+ </div> 
+ </div> 
+ </div> 
+ ); 
+  
 }
 
 export default TestCard
