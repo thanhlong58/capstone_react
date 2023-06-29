@@ -78,21 +78,21 @@ const Profile = () => {
       <div className='row'>
         <div className='col-4'>
           <div className='text-center'>
-            <label htmlFor='avatarUpload' className='avatar-label'>
+          <label htmlFor='avatarUpload' className='avatar-label'>
               <img width={200} className='rounded-circle avatar-img' src={userProfile.avatar} alt='Avatar' />
               <input
-                className=''
+                className={`text-align-right ${styles.customFileInput}`} 
                 type='file'
                 id='avatarUpload'
                 name='customFile'
                 onChange={(event) => {
                   ava.setFieldValue('customFile', event.currentTarget.files[0]);
                 }}
-              />
-            </label>
-            <button type='submit' className='btn btn-primary avatar-btn' onClick={ava.handleSubmit}>
+              /> <button type='submit' className='btn btn-primary d-block mx-5 my-2 avatar-btn' onClick={ava.handleSubmit}>
               Upload Avatar
             </button>
+            </label>
+           
           </div>
         </div>
         <div className='col-8'>

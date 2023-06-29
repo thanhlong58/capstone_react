@@ -38,3 +38,21 @@
   .upload-btn:hover {
     background-color: #0056b3;
   }
+
+
+  .customFileInput {
+    display: none;
+  }
+  
+  .avatar-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .avatar-btn {
+    margin-top: 10px;
+  }
+  
+  
