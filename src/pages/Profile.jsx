@@ -81,6 +81,7 @@ const Profile = () => {
             <label htmlFor='avatarUpload' className='avatar-label'>
               <img width={200} className='rounded-circle avatar-img' src={userProfile.avatar} alt='Avatar' />
               <input
+                className=''
                 type='file'
                 id='avatarUpload'
                 name='customFile'

@@ -10,7 +10,8 @@
       console.log(arrCart)
       if (!getStoreJson(USER_LOGIN).accessToken) {
       
-      customNavigate.push('/login')
+        customNavigate.push('/login');
+        return null;
       }
 
       const handleOrder = () => {
