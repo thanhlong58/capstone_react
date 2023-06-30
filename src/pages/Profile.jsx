@@ -120,7 +120,7 @@ const Profile = () => {
               </div>
             </div>
 
-            <div className='row'>
+            <div className='row mt-4'>
               <div className='col-6 form-group'>
                 <label htmlFor='phone'>Phone</label>
                 <input
@@ -143,7 +143,7 @@ const Profile = () => {
                 />
               </div>
             </div>
-            <div className='form-group'>
+            <div className='form-group mt-3'>
               <label>Gender</label>
               <div className='form-check'>
                 <input

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { USER_LOGIN } from '../utility/config';
 import { loginAction, loginActionApi } from '../redux/reducers/loginReducer';
-
+import '../styles/random.scss'
 const Header = () => {
   const navi = useNavigate()
   const { arrCart } = useSelector((state) => state.cartReducer);
@@ -41,12 +41,12 @@ const Header = () => {
            
             <li>
               <NavLink className="nav-link fs-5 text-primary " to="/profile">
-               Profile
+              <i class="fa fa-user"></i>  Profile
               </NavLink>
             </li>
             <li>
               <NavLink className=" nav-link  fs-5 text-primary " to="/cart">
-                Cart
+              <i class="fa fa-shopping-cart"></i> Cart
               </NavLink>
             </li>
             <li>
@@ -60,7 +60,7 @@ const Header = () => {
                 navi('/login')
 
               }}>
-                Logout
+               <i class="fa fa-sign-out-alt"></i>  Logout
               </span>
             </li>
           </ul>
@@ -113,12 +113,12 @@ const Header = () => {
           </li>
         
         </ul>
-        <form className="d-flex my-2 my-lg-0 text-light align-items-center">
+        <div className="d-flex  my-lg-0 text-light align-items-center">
           {renderLogin()}
-          <NavLink className="text-right" to="/cart" onClick={handleCartClick}>
+          <NavLink style={{marginRight: '60px'}} className="text-right" to="/cart" onClick={handleCartClick}>
             <i className="fa fa-cart-plus text-white fs-3">({arrCart.length})</i>
           </NavLink>
-        </form>
+        </div>
         {showLoginAlert && (
           <span className="alert alert-primary mx-3 mt-2" role="alert">
             Please login to visit your cart!

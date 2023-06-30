@@ -47,7 +47,7 @@ const Register = () => {
   
   return (
     <div className='container'>
-      <form onSubmit={frm.handleSubmit} id='form' className='card'>
+      <form onSubmit={frm.handleSubmit} id='form' className='card mt-4'>
         <div className='card-header bg-white text-dark'>
           <h3 className='text-center'>Register</h3>
         </div>

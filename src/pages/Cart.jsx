@@ -31,9 +31,9 @@
       };
     
     return (
-    <div className='container bg-white'>
-      Cart
-      <table className='table'>
+    <div className='container bg-white mt-4 rounded'>
+    
+      <table className='table '>
           <thead>
               <tr>
                   <th>ID</th>
