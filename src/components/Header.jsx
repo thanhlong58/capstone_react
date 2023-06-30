@@ -11,7 +11,7 @@ const Header = () => {
   const [showLoginAlert, setShowLoginAlert] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const dispatch = useDispatch()
-  
+
   useEffect(() => {
     // Fetch user profile data after successful login
     if (userLogin.accessToken) {
@@ -24,7 +24,7 @@ const Header = () => {
       return (
         <div className="nav-item dropdown mx-3">
           <a
-           
+
             id="navbarDropdown"
             role="button"
             data-bs-toggle="dropdown"
@@ -38,29 +38,40 @@ const Header = () => {
             />
           </a>
           <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-           
+
             <li>
-              <NavLink className="nav-link fs-5 text-primary " to="/profile">
-              <i class="fa fa-user"></i>  Profile
+              <NavLink className="nav-link   " to="/profile">
+                <i class="fa fa-user"></i>  Profile
               </NavLink>
             </li>
             <li>
-              <NavLink className=" nav-link  fs-5 text-primary " to="/cart">
-              <i class="fa fa-shopping-cart"></i> Cart
+              <NavLink className=" nav-link  " to="/cart">
+                <i class="fa fa-shopping-cart"></i> Cart
               </NavLink>
+            </li>
+            <li>
+              <span
+                style={{ cursor: 'pointer' }}
+                className="nav-link"
+                onClick={() => {
+                  navi('/profile?tab=favoriteProducts');
+                }}
+              >
+                <i className="fa fa-heart text-danger"></i> Likes
+              </span>
             </li>
             <li>
               <hr className="dropdown-divider" />
             </li>
             <li>
-              <span style={{cursor:'pointer'}} className="nav-link fs-5 text-primary" onClick={()=> {
+              <span style={{ cursor: 'pointer' }} className="nav-link " onClick={() => {
                 localStorage.removeItem(USER_LOGIN);
                 const action = loginAction({});
-                dispatch (action);
+                dispatch(action);
                 navi('/login')
 
               }}>
-               <i class="fa fa-sign-out-alt"></i>  Logout
+                <i class="fa fa-sign-out-alt"></i>  Logout
               </span>
             </li>
           </ul>
@@ -111,11 +122,11 @@ const Header = () => {
               Register
             </NavLink>
           </li>
-        
+
         </ul>
         <div className="d-flex  my-lg-0 text-light align-items-center">
           {renderLogin()}
-          <NavLink style={{marginRight: '60px'}} className="text-right" to="/cart" onClick={handleCartClick}>
+          <NavLink style={{ marginRight: '60px' }} className="text-right" to="/cart" onClick={handleCartClick}>
             <i className="fa fa-cart-plus text-white fs-3">({arrCart.length})</i>
           </NavLink>
         </div>

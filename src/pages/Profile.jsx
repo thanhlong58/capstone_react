@@ -6,9 +6,10 @@ import * as yup from 'yup';
 import { favouriteActionApi } from '../redux/reducers/productsReducer';
 import { Pagination } from 'antd';
 import  styles from '../styles/profile.module.css'
-
+import { useLocation } from 'react-router-dom';
 
 const Profile = () => {
+  
   const [currentPage, setCurrentPage] = useState(1);
   const { avatar } = useSelector(state => state.loginReducer)
   console.log(avatar)
@@ -64,8 +65,10 @@ const Profile = () => {
     },
   });
 
-  const [activeTab, setActiveTab] = useState('orderHistory');
-
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const activeTabParam = queryParams.get('tab');
+  const [activeTab, setActiveTab] = useState(activeTabParam || 'orderHistory');
   const handleTabChange = (tab) => {
     setActiveTab(tab);
   };
