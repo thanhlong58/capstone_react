@@ -56,7 +56,7 @@ const Register = () => {
            <div className='col-6'>
              <div className='form-group'></div>
              <p>Email</p>
-             <input className='form-control '    value={frm.values.email}  id='email' name='email' onChange={frm.handleChange} onBlur={frm.handleBlur} />
+             <input className='form-control '    value={frm.values.email}  id='email' name='email' onChange={frm.handleChange}  />
              {frm.errors.email && <p className='text-danger'>{frm.errors.email}</p>}
            </div>
            <div className='col-6'>

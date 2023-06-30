@@ -1,4 +1,8 @@
 .test-card {
+  .selected {
+    background-color: #5f97a5;
+    color: #ffffff;
+  }
    @mixin flex ($dir: row, $wrap: nowrap, $ai: center, $jc: center, $ac: center){
       display: flex;
       flex-direction: $dir;

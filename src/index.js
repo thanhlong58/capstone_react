@@ -12,7 +12,7 @@ import Cart from './pages/Cart';
 import Profile from './pages/Profile';
 //custom history 
 import  {createBrowserHistory} from 'history'
-import TestCard from './pages/TestCard';
+
 export const customNavigate = createBrowserHistory()
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -31,7 +31,7 @@ root.render(
           </Route>
 
           <Route path='cart' element={<Cart/>}></Route>
-          <Route path='test-card' element={<TestCard/>}></Route>
+         
         </Route>
        </Routes>
     </HistoryRouter>

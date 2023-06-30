@@ -11,7 +11,7 @@ const Detail = () => {
     const { productDetail } = useSelector(state => state.detailProducer)
     const { arrCart } = useSelector(state => state.cartReducer)
 
-
+    const [selectedSize, setSelectedSize] = useState(null);
     console.log(productDetail);
     const dispatchComponent = useDispatch();
 
@@ -43,12 +43,27 @@ const Detail = () => {
               <div className={`${style.attrib} ${style.size} size`}>
                 <p className={`${style.header} header`}>Select Size</p>
                 <div className={`${style.options} options`}>
-                  <div className={`${style.option} option`}>6</div>
-                  <div className={`${style.option} option`}>7</div>
-                  <div className={`${style.option} option`}>8</div>
-                  <div className={`${style.option} option`}>9</div>
-                  <div className={`${style.option} option`}>10</div>
-                  <div className={`${style.option} option`}>11</div>
+                <div className={`${style.option} option ${selectedSize === '6' ? style.selected : ''}`} onClick={() => setSelectedSize('6')}>
+  36
+</div>
+<div className={`${style.option} option ${selectedSize === '7' ? style.selected : ''}`} onClick={() => setSelectedSize('7')}>
+  37
+</div>
+<div className={`${style.option} option ${selectedSize === '8' ? style.selected : ''}`} onClick={() => setSelectedSize('8')}>
+  38
+</div>
+<div className={`${style.option} option ${selectedSize === '9' ? style.selected : ''}`} onClick={() => setSelectedSize('9')}>
+  39
+</div>
+<div className={`${style.option} option ${selectedSize === '10' ? style.selected : ''}`} onClick={() => setSelectedSize('10')}>
+  40
+</div>
+<div className={`${style.option} option ${selectedSize === '11' ? style.selected : ''}`} onClick={() => setSelectedSize('11')}>
+  41
+</div>
+<div className={`${style.option} option ${selectedSize === '12' ? style.selected : ''}`} onClick={() => setSelectedSize('12')}>
+  42
+</div>
                 </div>
               </div>
               <div className={`${style.attrib} ${style.color} color`}>

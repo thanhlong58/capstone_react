@@ -150,8 +150,8 @@ const Home = () => {
       </div>
       <div className={styles['main-images']}>
         <img  id="blue" className={`${styles.blue} ${styles.active}`} src={item.image} alt="blue" />
-        <img id="pink" className={styles.pink}  src={item.image} alt="blue" />
-        <img id="yellow" className={styles.yellow} src="images/yellow.png" alt="blue" />
+    
+       
       </div>
       <div className={styles['shoe-details']}>
         <span className={styles['shoe_name']}>{item.name}</span>

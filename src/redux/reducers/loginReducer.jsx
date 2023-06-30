@@ -53,7 +53,7 @@ export const upLoadAvatarApi = (image) => {
       })
       
       console.log(res)
-       const action = uploadAvatarAction(res.data.content)
+       const action = uploadAvatarAction(res.data)
        dispatch(action)
     }catch(err) {
       console.log(err)
@@ -79,13 +79,14 @@ export const loginActionApi = (user) => {
             dispatch(action)
 
             Swal.fire({
-              position: 'top-end',
+              position: 'top-center',
               icon: 'success',
               title: `Hello ${user.email}`,
               showConfirmButton: false,
               timer: 1500
             })
             setStoreJson(USER_LOGIN,res.data.content)
+            console.log(res)
         }
         catch (err) {
          console.log(err)

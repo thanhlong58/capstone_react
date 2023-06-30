@@ -15,7 +15,7 @@ const Profile = () => {
   const { userProfile } = useSelector((state) => state.loginReducer);
   const { arrProduct } = useSelector((state) => state.productsReducer);
   const { favouriteProducts } = useSelector((state) => state.productsReducer);
-  console.log(userProfile);
+  console.log(userProfile.image);
   console.log(favouriteProducts)
   const dispatch = useDispatch();
   const getFav = async () => {
@@ -58,8 +58,8 @@ const Profile = () => {
     },
     onSubmit: (values) => {
       console.log('value', values)
-      var jsonFile = JSON.stringify(values);
-      const action = upLoadAvatarApi(jsonFile)
+    
+      const action = upLoadAvatarApi(values.customFile);
       dispatch(action);
     },
   });

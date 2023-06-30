@@ -1,22 +1,30 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { USER_LOGIN } from '../utility/config';
 import { loginAction, loginActionApi } from '../redux/reducers/loginReducer';
 
 const Header = () => {
+  const navi = useNavigate()
   const { arrCart } = useSelector((state) => state.cartReducer);
   const { userLogin, userProfile } = useSelector((state) => state.loginReducer);
   const [showLoginAlert, setShowLoginAlert] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const dispatch = useDispatch()
+  
+  useEffect(() => {
+    // Fetch user profile data after successful login
+    if (userLogin.accessToken) {
+      dispatch(loginActionApi(userLogin));
+    }
+  }, [userLogin, dispatch]);
+
   const renderLogin = () => {
     if (userLogin.accessToken) {
       return (
         <div className="nav-item dropdown mx-3">
           <a
-            className="nav-link dropdown-toggle"
-            href="/"
+           
             id="navbarDropdown"
             role="button"
             data-bs-toggle="dropdown"
@@ -32,12 +40,12 @@ const Header = () => {
           <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
            
             <li>
-              <NavLink className="dropdown-item" to="/profile">
+              <NavLink className="nav-link fs-5 text-primary " to="/profile">
                Profile
               </NavLink>
             </li>
             <li>
-              <NavLink className="dropdown-item" to="/cart">
+              <NavLink className=" nav-link  fs-5 text-primary " to="/cart">
                 Cart
               </NavLink>
             </li>
@@ -45,14 +53,15 @@ const Header = () => {
               <hr className="dropdown-divider" />
             </li>
             <li>
-              <NavLink className="dropdown-item" onClick={()=> {
+              <span style={{cursor:'pointer'}} className="nav-link fs-5 text-primary" onClick={()=> {
                 localStorage.removeItem(USER_LOGIN);
                 const action = loginAction({});
-                dispatch (action)
+                dispatch (action);
+                navi('/login')
 
               }}>
                 Logout
-              </NavLink>
+              </span>
             </li>
           </ul>
         </div>
@@ -77,7 +86,7 @@ const Header = () => {
   };
 
   return (
-    <nav className="navbar navbar-expand-sm navbar-dark bg-dark container">
+    <nav className="navbar navbar-expand-sm navbar-dark bg-dark ">
       <NavLink className="navbar-brand" to="/">
         Cybersoft Shoe Shop
       </NavLink>
@@ -102,11 +111,7 @@ const Header = () => {
               Register
             </NavLink>
           </li>
-          <li className="nav-item">
-            <NavLink className="nav-link" to="/test-card">
-              Test Card
-            </NavLink>
-          </li>
+        
         </ul>
         <form className="d-flex my-2 my-lg-0 text-light align-items-center">
           {renderLogin()}
