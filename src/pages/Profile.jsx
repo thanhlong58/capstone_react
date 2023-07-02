@@ -197,41 +197,49 @@ const Profile = () => {
       </ul>
 
       <div className="tab-content">
-        {activeTab === 'orderHistory' && (
-          <div className="tab-pane fade show active" id="orderHistory">
-            {userProfile.ordersHistory?.slice((currentPage - 1) * 2, currentPage * 3).map((order, index) => (
-              <table key={index} className="table table-striped">
-                <span className="text-success">Order have been placed on {order.date}</span>
-                <thead>
-                  <tr>
-                    <th>img</th>
-                    <th>name</th>
-                    <th>price</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {order.orderDetail?.map((item, itemIndex) => (
-                    <tr key={itemIndex}>
-                      <td>
-                        <img width={50} src={item.image} alt="Product" className="product-image" />
-                      </td>
-                      <td>{item.name}</td>
-                      <td>${item.price}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+      {activeTab === 'orderHistory' && (
+  <div className="tab-pane fade show active" id="orderHistory">
+    {userProfile.ordersHistory?.slice((currentPage - 1) * 2, currentPage * 3).map((order, index) => (
+      <div key={index}>
+        <h6 className="text-success mt-4">Order placed on {order.date}</h6>
+        <table className="table " style={{ tableLayout: 'fixed' }}>
+          <colgroup>
+            <col style={{ width: '20%' }} />
+            <col style={{ width: '50%' }} />
+            <col style={{ width: '20%' }} />
+          </colgroup>
+          <thead>
+            <tr>
+              <th>Image</th>
+              <th>Name</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            {order.orderDetail?.map((item, itemIndex) => (
+              <tr key={itemIndex}>
+                <td>
+                  <img src={item.image} alt="Product" className="product-image" style={{ maxWidth: '70px' }} />
+                </td>
+                <td>{item.name}</td>
+                <td>${item.price}</td>
+              </tr>
             ))}
-            <div className="text-center bg-light" style={{ display: 'inline-block' }}>
-              <Pagination
-                current={currentPage}
-                total={Math.ceil(userProfile.ordersHistory?.length / 2)}
-                pageSize={1}
-                onChange={handlePageChange}
-              />
-            </div>
-          </div>
-        )}
+          </tbody>
+        </table>
+      </div>
+    ))}
+    <div className="text-center bg-light" style={{ display: 'inline-block' }}>
+      <Pagination
+        current={currentPage}
+        total={Math.ceil(userProfile.ordersHistory?.length / 2)}
+        pageSize={1}
+        onChange={handlePageChange}
+      />
+    </div>
+  </div>
+)}
+
 
         {activeTab === 'favoriteProducts' && (
           <div className="tab-pane fade show active" id="favoriteProducts">
