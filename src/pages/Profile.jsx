@@ -72,9 +72,9 @@ const Profile = () => {
   };
 
   return (
-    <div className="container bg-light">
+    <div className="container bg-light mt-3 rounded">
       <div className="row">
-        <div className="col-12 col-md-4">
+        <div className="col-12 col-md-4 mt-3">
           <div className="text-center">
             <label htmlFor="avatarUpload" className="avatar-label">
               <img width={200} className="rounded-circle avatar-img" src={userProfile.avatar} alt="Avatar" />
@@ -93,7 +93,7 @@ const Profile = () => {
             </label>
           </div>
         </div>
-        <div className="col-12 col-md-8">
+        <div className="col-12 col-md-8 mt-3">
           <form onSubmit={frm.handleSubmit}>
             <div className="row">
               <div className="col-12 col-md-6 form-group">

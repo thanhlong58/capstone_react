@@ -5,9 +5,7 @@ import { customNavigate } from '../..';
 import Swal from 'sweetalert2';
 const initialState = {
     userLogin : getStoreJson(USER_LOGIN),
-    userProfile :  {
-
-    },
+    userProfile :  {},
     userUpdate : {},
     avatar : {}
 }
@@ -66,33 +64,35 @@ export const upLoadAvatarApi = (image) => {
 
 //asyn actiom 
 export const loginActionApi = (user) => {
-    return async (dispatch)=> {
-        try {
-            const res = await axios ({
-             url : 'https://shop.cyberlearn.vn/api/Users/signin',
-             method : 'POST',
-             data : user
+  return async (dispatch) => {
+    try {
+      const res = await axios({
+        url: 'https://shop.cyberlearn.vn/api/Users/signin',
+        method: 'POST',
+        data: user,
+      });
 
-            })
+      const action = loginAction(res.data.content);
+      dispatch(action);
 
-            const action = loginAction(res.data.content);
-            dispatch(action)
+      // Fetch user profile immediately after successful login
+      dispatch(getProfileApi());
 
-            Swal.fire({
-              position: 'top-center',
-              icon: 'success',
-              title: `Hello ${user.email}`,
-              showConfirmButton: false,
-              timer: 1500
-            })
-            setStoreJson(USER_LOGIN,res.data.content)
-            console.log(res)
-        }
-        catch (err) {
-         console.log(err)
-        }
+      Swal.fire({
+        position: 'top-center',
+        icon: 'success',
+        title: `Hello ${user.email}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      setStoreJson(USER_LOGIN, res.data.content);
+      console.log(res);
+    } catch (err) {
+      console.log(err);
     }
-} 
+  };
+};
+
 
 
 // export const getProfileApi = () => {

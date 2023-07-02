@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import axios from 'axios';
-
+import Swal from 'sweetalert2';
 const initialState = {
 
     userRegister :  {},
@@ -42,7 +42,13 @@ export const registerApi = (user) => {
   
         const action = registerAction(res.data.content);
         dispatch(action);
-        alert(`Welcome onboard ${user.email}`)
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title:`Welcome onboard ${user.email}`,
+          showConfirmButton: false,
+          timer: 1500
+        })
       } catch (error) {
      
         console.error('Error:', error);

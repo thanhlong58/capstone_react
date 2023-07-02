@@ -127,7 +127,8 @@ const Header = () => {
         <div className="d-flex  my-lg-0 text-light align-items-center">
           {renderLogin()}
           <NavLink style={{ marginRight: '60px' }} className="text-right" to="/cart" onClick={handleCartClick}>
-            <i className="fa fa-cart-plus text-white fs-3">({arrCart.length})</i>
+            <i className="fa  fa-shopping-cart   text-info fs-4">({arrCart.length})</i>
+        
           </NavLink>
         </div>
         {showLoginAlert && (
