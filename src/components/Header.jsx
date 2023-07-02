@@ -13,7 +13,7 @@ const Header = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    // Fetch user profile data after successful login
+   
     if (userLogin.accessToken) {
       dispatch(loginActionApi(userLogin));
     }
@@ -32,8 +32,8 @@ const Header = () => {
           >
             <img
               className="rounded-circle"
-              src={userProfile.avatar}
-              alt="Profile Avatar"
+              src={userProfile?.avatar}
+              alt="..."
               width={50}
             />
           </a>

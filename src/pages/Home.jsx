@@ -18,7 +18,6 @@ const Home = () => {
   const { arrProduct, favouriteProducts } = useSelector((state) => state.productsReducer);
   const { userLogin } = useSelector((state) => state.loginReducer);
   const [favoriteStatus, setFavoriteStatus] = useState({});
-  console.log(favouriteProducts);
   const [currentPage, setCurrentPage] = useState(1);
 
   const handlePageChange = (page) => {
@@ -105,22 +104,17 @@ const Home = () => {
  
 
   return (
-    
     <div className="container">
-     
-       <Carousel >
-      <div>
-        
-      <video style={contentStyle} autoPlay muted loop>
-          <source src={video} type="video/webm" />
-          Your browser does not support the video tag.
-        </video>
-    
-      </div>
-      
-    </Carousel>
+      <Carousel >
+        <div>
+          <video style={contentStyle} autoPlay muted loop>
+            <source src={video} type="video/webm" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </Carousel>
 
-    <div className={style['search-bar'] + ' mt-4'}>
+      <div className={`${style['search-bar']} mt-4`}>
         <select
           onChange={handleSort}
           className={`mx-2 ${style['select-sort']}`}
@@ -143,68 +137,69 @@ const Home = () => {
           <option value="converse">Converse</option>
         </select>
       </div>
-      <div >
-          <div className='row '>
-             {arrProduct.slice((currentPage - 1) * 6, currentPage * 6).map((item,index)=> {
-               const isFavorite = favoriteStatus[item.id];
-               const heartClassName = isFavorite ? 'fa fa-heart text-danger' : 'fa fa-heart';
-     
-              return <div className='col-4 mt-5 card-group' key={index}>
+      
+      <div>
+        <div className='row'>
+          {arrProduct.slice((currentPage - 1) * 6, currentPage * 6).map((item, index) => {
+            const isFavorite = favoriteStatus[item.id];
+            const heartClassName = isFavorite ? 'fa fa-heart text-danger' : 'fa fa-heart';
+
+            return (
+              <div className='col-12 col-md-6 col-lg-4 mt-5 card-group' key={index}>
                 <div className={styles['product-card']}>
-      <div className={styles['logo-cart']}>
-        {/*<img src="images/logo.jpg" alt="logo">*/}
-        <i className="bx bx-shopping-bag" />
-      </div>
-      <div className={styles['main-images']}>
-        <img  id="blue" className={`${styles.blue} ${styles.active}`} src={item.image} alt="blue" />
-    
-       
-      </div>
-      <div className={styles['shoe-details']}>
-        <span className={styles['shoe_name']}>{item.name}</span>
-        <p>{item.description}</p>
-        <div className={styles.stars}>
-          <i className="bx bxs-star" />
-          <i className="bx bxs-star" />
-          <i className="bx bxs-star" />
-          <i className="bx bxs-star" />
-          <i className="bx bx-star" />
-        </div>
-      </div>
-      <div className={styles['color-price']}>
-      <NavLink className={styles['nav-link']} activeClassName={styles['active']} to={`/detail/${item.id}`}>
-                    View detail
-                  </NavLink>
-                  <div className={styles['heart-icon']} onClick={() => handleLikeClick(item.id)}>
-                  <i className={`${heartClassName} ${styles['heart-icon-size']}`}></i>
-        </div>
-        <div className={styles.price}>
-          <span className={styles['price_num']}>${item.price}</span>
-          <span className={styles['price_letter']}>{numberToWords.toWords(item.price)} only</span>
-        </div>
-      </div>  
-      <div className={styles.button}>
-        <div className={styles['button-layer'] } />
-        <button  onClick={() => {
+                  <div className={styles['logo-cart']}>
+                    <i className="bx bx-shopping-bag" />
+                  </div>
+                  <div className={styles['main-images']}>
+                    <img id="blue" className={`${styles.blue} ${styles.active}`} src={item.image} alt="blue" />
+                  </div>
+                  <div className={styles['shoe-details']}>
+                    <span className={styles['shoe_name']}>{item.name}</span>
+                    <p>{item.description}</p>
+                    <div className={styles.stars}>
+                      <i className="bx bxs-star" />
+                      <i className="bx bxs-star" />
+                      <i className="bx bxs-star" />
+                      <i className="bx bxs-star" />
+                      <i className="bx bx-star" />
+                    </div>
+                  </div>
+                  <div className={styles['color-price']}>
+                    <NavLink className={styles['nav-link']} activeClassName={styles['active']} to={`/detail/${item.id}`}>
+                      View detail
+                    </NavLink>
+                    <div className={styles['heart-icon']} onClick={() => handleLikeClick(item.id)}>
+                      <i className={`${heartClassName} ${styles['heart-icon-size']}`}></i>
+                    </div>
+                    <div className={styles.price}>
+                      <span className={styles['price_num']}>${item.price}</span>
+                      <span className={styles['price_letter']}>{numberToWords.toWords(item.price)} only</span>
+                    </div>
+                  </div>  
+                  <div className={styles.button}>
+                    <div className={styles['button-layer'] } />
+                    <button  onClick={() => {
                       const action = addtoCartAction(item);
                       dispatchComponent(action);
                     }}>Add To Cart</button>
-      </div>
-    </div>
+                  </div>
+                </div>
               </div>
-             })}
-          </div>
+            );
+          })}
+        </div>
       </div>
+
       <div className='mt-5 d-flex justify-content-center'>
-  <div className='text-center bg-light' style={{ display: 'inline-block' }}>
-    <Pagination
-      defaultCurrent={1}
-      total={arrProduct.length}
-      pageSize={6}
-      onChange={handlePageChange}
-    />
-  </div>
-</div>
+        <div className='text-center bg-light' style={{ display: 'inline-block' }}>
+          <Pagination
+            defaultCurrent={1}
+            total={arrProduct.length}
+            pageSize={6}
+            onChange={handlePageChange}
+          />
+        </div>
+      </div>
       
     </div>
   );
