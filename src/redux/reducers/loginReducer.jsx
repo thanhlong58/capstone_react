@@ -24,7 +24,7 @@ const loginReducer = createSlice({
       state.userUpdate = action.payload
     },
     uploadAvatarAction: (state, action) => {
-      state.userProfile.image = action.payload;
+      state.avatar = action.payload;
     }
   }
  
