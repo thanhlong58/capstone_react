@@ -44,7 +44,7 @@ const Register = () => {
   }, [frm.isValid, dispatch]);
 
   return (
-    <div className="container">
+    <div  className="container  pt-5">
       <form onSubmit={frm.handleSubmit} id="form" className="card mt-4">
         <div className="card-header bg-white text-dark">
           <h3 className="text-center">Register</h3>

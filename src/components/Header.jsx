@@ -4,16 +4,36 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { USER_LOGIN } from '../utility/config';
 import { loginAction, loginActionApi } from '../redux/reducers/loginReducer';
 import '../styles/random.scss'
+import 'animate.css';
 const Header = () => {
   const navi = useNavigate()
   const { arrCart } = useSelector((state) => state.cartReducer);
   const { userLogin, userProfile } = useSelector((state) => state.loginReducer);
   const [showLoginAlert, setShowLoginAlert] = useState(false);
-  const [showDropdown, setShowDropdown] = useState(false);
+  const [prevCartLength, setPrevCartLength] = useState(arrCart.length);
   const dispatch = useDispatch()
-
+ 
   useEffect(() => {
-   
+    if (userLogin.accessToken) {
+      dispatch(loginActionApi(userLogin));
+    }
+    
+    // Check if arrCart length increased
+    if (arrCart.length > prevCartLength) {
+      const cartIcon = document.getElementById('cartIcon');
+      cartIcon.classList.add('animate__animated', 'animate__bounce');
+      
+      // Remove the bounce animation after it finishes
+      setTimeout(() => {
+        cartIcon.classList.remove('animate__animated', 'animate__bounce');
+      }, 1000);
+    }
+  
+    // Update the previous cart length
+    setPrevCartLength(arrCart.length);
+  }, [userLogin, dispatch, arrCart, prevCartLength]);
+  useEffect(() => {
+
     if (userLogin.accessToken) {
       dispatch(loginActionApi(userLogin));
     }
@@ -93,11 +113,12 @@ const Header = () => {
       setTimeout(() => {
         setShowLoginAlert(false);
       }, 2000);
+    } else {
+      return null
     }
   };
-
   return (
-    <nav className="navbar navbar-expand-sm navbar-dark bg-dark ">
+    <nav className="navbar navbar-expand-sm navbar-dark bg-dark fixed-top ">
       <NavLink className="navbar-brand" to="/">
         Cybersoft Shoe Shop
       </NavLink>
@@ -127,8 +148,9 @@ const Header = () => {
         <div className="d-flex  my-lg-0 text-light align-items-center">
           {renderLogin()}
           <NavLink style={{ marginRight: '60px' }} className="text-right" to="/cart" onClick={handleCartClick}>
-            <i className="fa  fa-shopping-cart   text-info fs-4">({arrCart.length})</i>
-        
+          <i id="cartIcon" className="fa fa-shopping-cart text-info fs-4">
+  ({arrCart.length})
+</i>
           </NavLink>
         </div>
         {showLoginAlert && (

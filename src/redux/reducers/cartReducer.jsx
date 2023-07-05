@@ -71,22 +71,32 @@ export default cartReducer.reducer
 
 
 
-export const orderApi = (order) =>  {
-  return async ( dispatch) => {
-   try {
-    const res = await axios ({
-      url : 'https://shop.cyberlearn.vn/api/Users/order',
-      method : 'POST',
-      data : order
-    })
-     
-    const action  =  orderAction(res.data.content)
-    dispatch (action)
-   }catch(err) {
-    console.log(err)
-   }
-   
-  }
-}
+export const orderApi = (order) => {
+  return async (dispatch, getState) => {
+    const { arrCart } = getState().cartReducer;
+
+    if (arrCart.length === 0) {
+      Swal.fire('Your cart is empty.')
+      return;
+    }
+
+    try {
+      const res = await axios({
+        url: 'https://shop.cyberlearn.vn/api/Users/order',
+        method: 'POST',
+        data: order
+      });
+      Swal.fire('Successful payment', '', 'success');
+
+      const action = orderAction(res.data.content);
+      dispatch(action);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+
+
 
 

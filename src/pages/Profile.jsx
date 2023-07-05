@@ -7,7 +7,7 @@ import { favouriteAction, favouriteActionApi, unlikeActionApi } from '../redux/r
 import { Pagination } from 'antd';
 import styles from '../styles/profile.module.css';
 import { useLocation } from 'react-router-dom';
-import unlikeImage from '../assets/Images/unlike.png';
+
 
 const Profile = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -70,9 +70,10 @@ const Profile = () => {
   const handleTabChange = tab => {
     setActiveTab(tab);
   };
+  console.log(userProfile)
 
   return (
-    <div className="container bg-light mt-3 rounded">
+    <div className="container bg-light pt-5 rounded">
       <div className="row">
         <div className="col-12 col-md-4 mt-3">
           <div className="text-center">

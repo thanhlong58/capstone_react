@@ -86,7 +86,7 @@ const Home = () => {
     } else if (sortBy === 'desc') {
       sortedProducts = orderBy(sortedProducts, 'price', 'desc');
     } else {
-      sortedProducts = [...arrProduct];
+      getProductApi();
     }
 
     const action = sortProductAction(sortedProducts);
@@ -120,13 +120,13 @@ const Home = () => {
           className={`mx-2 ${style['select-sort']}`}
           name="sort-by-price"
         >
-          <option value="none">Sort by price</option>
+          <option value="">Sort by price</option>
           <option value="desc">Descending</option>
           <option value="asc">Ascending</option>
         </select>
         <select
           name=""
-          id=""
+          id="sort-category"
           onChange={(e) => setSelectedCategory(e.target.value)}
           className={style['select-category']} 
         >

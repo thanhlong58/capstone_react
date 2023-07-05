@@ -28,9 +28,12 @@ const Cart = () => {
     dispatch(action);
     dispatch(clearCartAction());
   };
-
+  let totalBill = arrCart.reduce((total, item, index) => {
+    return total += (item.price * item.quantity)
+  }, 0)
   return (
-    <div className="container bg-white mt-4 rounded">
+
+    <div style={{ marginTop: '100px' }} className="container bg-white rounded">
       <div className="table-responsive">
         <table className="table">
           <thead>
@@ -53,7 +56,7 @@ const Cart = () => {
                     <img src={item.image} width={50} alt="..." />
                   </td>
                   <td>{item.name}</td>
-                  <td>{item.price}</td>
+                  <td>${item.price}</td>
                   <td>
                     <div className="d-flex align-items-center">
                       <button
@@ -85,7 +88,7 @@ const Cart = () => {
                       </button>
                     </div>
                   </td>
-                  <td>{item.quantity * item.price}</td>
+                  <td>${item.quantity * item.price}</td>
                   <td>
                     <button
                       onClick={() => {
@@ -101,6 +104,12 @@ const Cart = () => {
               );
             })}
           </tbody>
+          <tfoot >
+            <td colSpan="5"></td>
+            <td className='text-success fs-5 pt-4'>Total Bill</td>
+
+            <td className='fs-5 text-bold text-success pt-4 '>  ${totalBill}</td>
+          </tfoot>
         </table>
       </div>
       <div className="d-flex justify-content-end p-3">

@@ -7,7 +7,7 @@ const initialState = {
     userLogin : getStoreJson(USER_LOGIN),
     userProfile :  {},
     userUpdate : {},
-    avatar : {}
+    avatar : null
 }
 
 const loginReducer = createSlice({
@@ -64,7 +64,15 @@ export const upLoadAvatarApi = (image) => {
 
 //asyn actiom 
 export const loginActionApi = (user) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const { userLogin } = getState().loginReducer;
+    
+    
+    if (userLogin.accessToken) {
+           dispatch(getProfileApi());
+      return;
+    }
+
     try {
       const res = await axios({
         url: 'https://shop.cyberlearn.vn/api/Users/signin',
@@ -75,7 +83,7 @@ export const loginActionApi = (user) => {
       const action = loginAction(res.data.content);
       dispatch(action);
 
-      // Fetch user profile immediately after successful login
+  
       dispatch(getProfileApi());
 
       Swal.fire({
@@ -85,13 +93,22 @@ export const loginActionApi = (user) => {
         showConfirmButton: false,
         timer: 1500,
       });
+
       setStoreJson(USER_LOGIN, res.data.content);
       console.log(res);
+      customNavigate.push('/');
     } catch (err) {
+      Swal.fire({
+        icon: 'error',
+      
+        text: 'Wrong email or password, please try again!',
+        
+      })
       console.log(err);
     }
   };
 };
+
 
 
 

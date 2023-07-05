@@ -6,6 +6,9 @@ import { loginActionApi } from '../redux/reducers/loginReducer'
 import styles from '../css/login.module.css'
 
 const Login = () => {
+  const {userProfile} = useSelector(state=> state.loginReducer)
+  console.log(userProfile);
+  
   const dispatch = useDispatch()
   const frm = useFormik({
     initialValues: {
