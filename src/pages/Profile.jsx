@@ -11,6 +11,7 @@ import { useLocation } from 'react-router-dom';
 
 const Profile = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 6;
   const { avatar } = useSelector(state => state.loginReducer);
   const { userProfile } = useSelector(state => state.loginReducer);
   const { arrProduct } = useSelector(state => state.productsReducer);
@@ -198,48 +199,48 @@ const Profile = () => {
       </ul>
 
       <div className="tab-content">
-      {activeTab === 'orderHistory' && (
-  <div className="tab-pane fade show active" id="orderHistory">
-    {userProfile.ordersHistory?.slice((currentPage - 1) * 2, currentPage * 3).map((order, index) => (
-      <div key={index}>
-        <h6 className="text-success mt-4">Order placed on {order.date}</h6>
-        <table className="table " style={{ tableLayout: 'fixed' }}>
-          <colgroup>
-            <col style={{ width: '20%' }} />
-            <col style={{ width: '50%' }} />
-            <col style={{ width: '20%' }} />
-          </colgroup>
-          <thead>
-            <tr>
-              <th>Image</th>
-              <th>Name</th>
-              <th>Price</th>
-            </tr>
-          </thead>
-          <tbody>
-            {order.orderDetail?.map((item, itemIndex) => (
-              <tr key={itemIndex}>
-                <td>
-                  <img src={item.image} alt="Product" className="product-image" style={{ maxWidth: '70px' }} />
-                </td>
-                <td>{item.name}</td>
-                <td>${item.price}</td>
-              </tr>
+        {activeTab === 'orderHistory' && (
+          <div className="tab-pane fade show active" id="orderHistory">
+            {userProfile.ordersHistory?.slice((currentPage - 1) * 2, currentPage * 3).map((order, index) => (
+              <div key={index}>
+                <h6 className="text-success mt-4">Order placed on {order.date}</h6>
+                <table className="table " style={{ tableLayout: 'fixed' }}>
+                  <colgroup>
+                    <col style={{ width: '20%' }} />
+                    <col style={{ width: '50%' }} />
+                    <col style={{ width: '20%' }} />
+                  </colgroup>
+                  <thead>
+                    <tr>
+                      <th>Image</th>
+                      <th>Name</th>
+                      <th>Price</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {order.orderDetail?.map((item, itemIndex) => (
+                      <tr key={itemIndex}>
+                        <td>
+                          <img src={item.image} alt="Product" className="product-image" style={{ maxWidth: '70px' }} />
+                        </td>
+                        <td>{item.name}</td>
+                        <td>${item.price}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             ))}
-          </tbody>
-        </table>
-      </div>
-    ))}
-    <div className="text-center bg-light" style={{ display: 'inline-block' }}>
-      <Pagination
-        current={currentPage}
-        total={Math.ceil(userProfile.ordersHistory?.length / 2)}
-        pageSize={1}
-        onChange={handlePageChange}
-      />
-    </div>
-  </div>
-)}
+            <div className="text-center bg-light" style={{ display: 'inline-block' }}>
+              <Pagination
+                current={currentPage}
+                total={Math.ceil(userProfile.ordersHistory?.length / 2)}
+                pageSize={1}
+                onChange={handlePageChange}
+              />
+            </div>
+          </div>
+        )}
 
 
         {activeTab === 'favoriteProducts' && (
@@ -252,27 +253,29 @@ const Profile = () => {
                 </tr>
               </thead>
               <tbody>
-                {favouriteProducts?.slice((currentPage - 1) * 2, currentPage * 6).map((item, index) => {
-                  return (
-                    <tr key={index}>
-                      <td style={{ textAlign: 'center' }}>
-                        <img src={item.image} alt="..." width={100} />
-                      </td>
-                      <td className="fs-4" style={{ textAlign: 'center' }}>
-                        {item.name}
-                      </td>
-                    </tr>
-                  );
-                })}
+                {favouriteProducts
+                  ?.slice((currentPage - 1) * pageSize, currentPage * pageSize)
+                  .map((item, index) => {
+                    return (
+                      <tr key={index}>
+                        <td style={{ textAlign: 'center' }}>
+                          <img src={item.image} alt="..." width={100} />
+                        </td>
+                        <td className="fs-4" style={{ textAlign: 'center' }}>
+                          {item.name}
+                        </td>
+                      </tr>
+                    );
+                  })}
               </tbody>
             </table>
             <div className="text-center bg-light" style={{ display: 'inline-block' }}>
-              <Pagination
-                defaultCurrent={1}
-                total={Math.ceil(favouriteProducts?.length / 6)}
-                pageSize={1}
-                onChange={handlePageChange}
-              />
+            <Pagination
+  defaultCurrent={1}
+  total={Math.ceil(favouriteProducts?.length / pageSize)}
+  pageSize={1}
+  onChange={handlePageChange}
+/>
             </div>
           </div>
         )}
